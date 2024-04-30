@@ -58,8 +58,10 @@ body{
 }
 
 #winner{
+  color: yellow;
 }
 
 #player{
+  color: dodgerblue;
 }
 

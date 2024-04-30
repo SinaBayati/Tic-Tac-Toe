@@ -20,6 +20,9 @@ const App = (function(){
     }
   ];
 
+  let currentPlayer = players[0];
+  let currentRound = 0;
+
   const getPlayers = function(){
     return players;
   };
@@ -119,10 +122,6 @@ const App = (function(){
     return {row,col};
   };
 
-  const tileClickHandler = function(event){
-    
-  }
-
   const boardEl = document.querySelector("#gameBoard");
   const winnerEl = document.querySelector("#winner");
   const playerEl = document.querySelector("#player");
@@ -145,55 +144,91 @@ const App = (function(){
 
   const renderWinner = function(player){
     winnerEl.textContent = player.name + "Won!";
+    winnerEl.style.color = "lime";
   };
+
+  const renderTie = function(){
+    winnerEl.textContent = "It's a tie!";
+  }
   
   const renderCurrentPlayer = function(player){
     playerEl.textContent = 
       `Current Player: ${player.name} | Marker: ${player.marker}`;
   };
 
-  const play = function(){
+  const render = function(){
     renderBoard();
-    const maxRounds = 9;
-    let playerIndex = null;
-    for(let i = 0; i < maxRounds; i++){
-      playerIndex = i % 2;
-      playRound(players[playerIndex]);
-      if(checkWin()){
-        renderBoard();
-        if(checkWin() == "X"){
-          renderWinner(players[0]);
-          players[0].wins += 1;
-        }
-        else{
-          renderWinner(players[1]);
-          players[1].wins += 1;
-        }
-        break;
+    renderCurrentPlayer(currentPlayer);
+  }
+
+  const tileClickHandler = function(event){
+    const coords = event.target.dataset.coords;
+    const [row,col] = coords.split("-");
+
+    playRound(row,col);
+
+    if(checkWin()){
+      renderBoard();
+      if(checkWin() == "X"){
+        renderWinner(players[0]);
+        players[0].wins += 1;
+      }
+      else{
+        renderWinner(players[1]);
+        players[1].wins += 1;
       }
     }
-  };
-
-  const playRound = function(player){
-    renderCurrentPlayer(player)
+    else if(currentRound === 9){
+      renderTie();
+    }
     
-    const marker = player.marker;
+  };
+  
+  const playRound = function(row,col){
+    const marker = currentPlayer.marker;
     while(true){
-      const {row,col} = getMarkerLocation();
       if(addMarker(marker,row,col) === 0){
         renderBoard();
         break;
       }
     }
+    
+    currentRound++;
+    const currentIndex = currentRound % 2;
+    currentPlayer = players[currentIndex];
+    renderCurrentPlayer(currentPlayer);
   }; 
+
+  // const play = function(){
+  //   renderBoard();
+  //   const maxRounds = 9;
+  //   let playerIndex = null;
+  //   for(let i = 0; i < maxRounds; i++){
+  //     playerIndex = i % 2;
+  //     playRound(players[playerIndex]);
+  //     if(checkWin()){
+  //       renderBoard();
+  //       if(checkWin() == "X"){
+  //         renderWinner(players[0]);
+  //         players[0].wins += 1;
+  //       }
+  //       else{
+  //         renderWinner(players[1]);
+  //         players[1].wins += 1;
+  //       }
+  //       break;
+  //     }
+  //   }
+  // };
+
 
   return{
     getPlayers,
     setPlayerName,
-    play,
+    render,
   };
 })();
 
 App.setPlayerName(prompt("Player1: ","Player-1"),"1");
 App.setPlayerName(prompt("Player2: ","Player-2"),"2");
-App.play();
+App.render();

@@ -7,6 +7,7 @@
   --white: #fff;
   --main-color: #1b273a;
   --shadow: 0 0 5px #ffffffcb;
+  --border-width: 2px;
 }
 
 body{
@@ -68,5 +69,38 @@ body{
 
 #info{
   color: var(--white);
+}
+
+.buttons{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.buttons button{
+  font-size: 1rem;
+  color: var(--white);
+  box-sizing: border-box;
+  padding: 10px 0;
+  border: none;
+  border: var(--border-width) solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buttons button:hover,
+.buttons button:active{
+  border: var(--border-width) solid #000;
+}
+
+#reset{
+  background-color: #e70000;
+}
+
+#next-game{
+  background-color: #00e600;
+  color: #000;
 }
 

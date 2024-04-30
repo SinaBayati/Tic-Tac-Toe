@@ -5,7 +5,7 @@
 
 :root{
   --white: #fff;
-  --main-color: #202733;
+  --main-color: #1b273a;
   --shadow: 0 0 5px #ffffffcb;
 }
 
@@ -14,7 +14,7 @@ body{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: var(--main-color);
+  background: radial-gradient(circle,dodgerblue,black 70%);
 }
 
 .container{
@@ -29,6 +29,7 @@ body{
   gap: 20px;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--main-color);
 }
 
 .container h1{

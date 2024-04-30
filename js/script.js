@@ -126,11 +126,13 @@ const App = (function(){
   const renderWinner = function(player){
     winnerEl.textContent = player.name + " Won!";
     winnerEl.style.color = "lime";
+    removeListeners();
   };
 
   const renderTie = function(){
     winnerEl.textContent = "It's a tie!";
-  }
+    removeListeners();
+  };
   
   const renderCurrentPlayer = function(player){
     playerEl.textContent = 
@@ -189,7 +191,13 @@ const App = (function(){
       renderCurrentPlayer(currentPlayer);
     }
     
-  }; 
+  };
+  
+  const removeListeners = function(){
+    document.querySelectorAll(".tile").forEach(tile => {
+      tile.removeEventListener("click",tileClickHandler);
+    });
+  };
 
   return{
     getPlayers,

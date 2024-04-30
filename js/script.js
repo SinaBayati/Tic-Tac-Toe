@@ -117,7 +117,7 @@ const App = (function(){
         tile.className = "tile";
         tile.dataset.coords = `${rowIndex}-${colIndex}`;
         tile.textContent = col;
-        tile.addEventListener("click",tileClickHandler);
+        tile.addEventListener("click",tileClickHandler,{once: true});
         boardEl.append(tile);
       });
     });
@@ -163,7 +163,6 @@ const App = (function(){
     playRound(row,col);
 
     if(checkWin()){
-      renderBoard();
       if(checkWin() == "X"){
         renderWinner(players[0]);
         players[0].wins += 1;
@@ -178,22 +177,18 @@ const App = (function(){
     else if(currentRound === 9){
       renderTie();
     }
-    
   };
   
   const playRound = function(row,col){
     const marker = currentPlayer.marker;
-    while(true){
-      if(addMarker(marker,row,col) === 0){
-        renderBoard();
-        break;
-      }
+    if(addMarker(marker,row,col) === 0){
+      renderBoard();
+      currentRound++;
+      const currentIndex = currentRound % 2;
+      currentPlayer = players[currentIndex];
+      renderCurrentPlayer(currentPlayer);
     }
     
-    currentRound++;
-    const currentIndex = currentRound % 2;
-    currentPlayer = players[currentIndex];
-    renderCurrentPlayer(currentPlayer);
   }; 
 
   return{

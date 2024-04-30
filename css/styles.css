@@ -65,3 +65,7 @@ body{
   color: dodgerblue;
 }
 
+#info{
+  color: var(--white);
+}
+

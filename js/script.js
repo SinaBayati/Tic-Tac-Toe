@@ -102,29 +102,10 @@ const App = (function(){
     });
   };
 
-  const getMarkerLocation = function(){
-    let row = null;
-    let col = null;
-    while(true){
-      const userInput = prompt("row,col: ").trim();
-    
-      row = userInput.split(",")[0];
-      col = userInput.split(",")[1];
-
-      if((row > 2 || row < 0) || (col > 2 || col < 0)){
-        continue;
-      }
-      else{
-        break;
-      }
-    }
-
-    return {row,col};
-  };
-
   const boardEl = document.querySelector("#gameBoard");
   const winnerEl = document.querySelector("#winner");
   const playerEl = document.querySelector("#player");
+  const infoEl = document.querySelector("#info");
 
   const renderBoard = function(){
     boardEl.innerHTML = null;
@@ -143,7 +124,7 @@ const App = (function(){
   };
 
   const renderWinner = function(player){
-    winnerEl.textContent = player.name + "Won!";
+    winnerEl.textContent = player.name + " Won!";
     winnerEl.style.color = "lime";
   };
 
@@ -156,9 +137,23 @@ const App = (function(){
       `Current Player: ${player.name} | Marker: ${player.marker}`;
   };
 
+  const renderInfo = function(){
+    const player1El = document.createElement("p");
+    player1El.textContent = 
+      `Player 1: ${players[0].name} | Wins: ${players[0].wins}`;
+
+    const player2El = document.createElement("p");
+    player2El.textContent = 
+      `Player 2: ${players[1].name} | Wins: ${players[1].wins}`;
+
+    infoEl.innerHTML = null;
+    infoEl.append(player1El,player2El);
+  };
+
   const render = function(){
     renderBoard();
     renderCurrentPlayer(currentPlayer);
+    renderInfo();
   }
 
   const tileClickHandler = function(event){
@@ -172,10 +167,12 @@ const App = (function(){
       if(checkWin() == "X"){
         renderWinner(players[0]);
         players[0].wins += 1;
+        renderInfo();
       }
       else{
         renderWinner(players[1]);
         players[1].wins += 1;
+        renderInfo();
       }
     }
     else if(currentRound === 9){
@@ -198,29 +195,6 @@ const App = (function(){
     currentPlayer = players[currentIndex];
     renderCurrentPlayer(currentPlayer);
   }; 
-
-  // const play = function(){
-  //   renderBoard();
-  //   const maxRounds = 9;
-  //   let playerIndex = null;
-  //   for(let i = 0; i < maxRounds; i++){
-  //     playerIndex = i % 2;
-  //     playRound(players[playerIndex]);
-  //     if(checkWin()){
-  //       renderBoard();
-  //       if(checkWin() == "X"){
-  //         renderWinner(players[0]);
-  //         players[0].wins += 1;
-  //       }
-  //       else{
-  //         renderWinner(players[1]);
-  //         players[1].wins += 1;
-  //       }
-  //       break;
-  //     }
-  //   }
-  // };
-
 
   return{
     getPlayers,

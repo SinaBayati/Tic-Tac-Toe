@@ -119,21 +119,47 @@ const App = (function(){
     return {row,col};
   };
 
+  const renderBoard = function(){
+    const boardEl = document.querySelector("#gameBoard");
+    const gameBoard = getGameBoard();
+
+    gameBoard.forEach(row => {
+      const rowEl = document.createElement("div");
+      row.forEach(col => {
+        const colEl = document.createElement("div");
+        colEl.textContent = col;
+        colEl.className = "tile";
+        rowEl.appendChild(colEl);
+      });
+      boardEl.appendChild(rowEl);
+    });
+  };
+
+  const renderWinner = function(player){
+    const winnerEl = document.querySelector("#winner");
+    winnerEl.textContent = player.name + "Won!";
+  };
+  
+  const renderCurrentPlayer = function(player){
+    const playerEl = document.querySelector("#player");
+    playerEl.textContent = 
+      `Player: ${player.name}  Marker: ${player.marker}`;
+  };
+
   const play = function(){
     const maxRounds = 9;
     let playerIndex = null;
     for(let i = 0; i < maxRounds; i++){
       playerIndex = i % 2;
-      console.log(`round: ${i + 1}`);
       playRound(players[playerIndex]);
       if(checkWin()){
-        console.log(getGameBoard());
+        renderBoard();
         if(checkWin() == "X"){
-          console.log(players[0].name + " Won!");
+          renderWinner(players[0]);
           players[0].wins += 1;
         }
         else{
-          console.log(players[1].name + " Won!");
+          renderWinner(players[1]);
           players[1].wins += 1;
         }
         break;
@@ -142,16 +168,14 @@ const App = (function(){
   };
 
   const playRound = function(player){
+    renderCurrentPlayer(player)
+    
     const marker = player.marker;
-    alert(`Player: ${player.name}\nMarker: ${player.marker}`);
     while(true){
       const {row,col} = getMarkerLocation();
       if(addMarker(marker,row,col) === 0){
-        console.log(getGameBoard());
+        renderBoard();
         break;
-      }
-      else{
-        console.log("Invalid Location!");
       }
     }
   }; 

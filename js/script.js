@@ -23,6 +23,14 @@ const App = (function(){
   let currentPlayer = players[0];
   let currentRound = 0;
 
+  const boardEl = document.querySelector("#gameBoard");
+  const winnerEl = document.querySelector("#winner");
+  const playerEl = document.querySelector("#player");
+  const infoEl = document.querySelector("#info");
+  const nextBtn = document.querySelector("#next-game");
+  const resetBtn = document.querySelector("#reset");
+  const modalBox = document.querySelector("dialog");
+
   const getPlayers = function(){
     return players;
   };
@@ -102,11 +110,6 @@ const App = (function(){
     });
   };
 
-  const boardEl = document.querySelector("#gameBoard");
-  const winnerEl = document.querySelector("#winner");
-  const playerEl = document.querySelector("#player");
-  const infoEl = document.querySelector("#info");
-
   const renderBoard = function(){
     boardEl.innerHTML = null;
     const gameBoard = getGameBoard();
@@ -156,7 +159,7 @@ const App = (function(){
     renderBoard();
     renderCurrentPlayer(currentPlayer);
     renderInfo();
-  }
+  };
 
   const tileClickHandler = function(event){
     const coords = event.target.dataset.coords;
@@ -198,6 +201,23 @@ const App = (function(){
       tile.removeEventListener("click",tileClickHandler);
     });
   };
+
+  const nextGameHandler = function(){
+    gameBoard.forEach((row,rowIndex) => {
+      row.forEach((col,colIndex) => gameBoard[rowIndex][colIndex] = "");
+    });
+    renderBoard();
+
+    currentRound = 0;
+    currentPlayer = players[0];
+  };
+
+  const resetHandler = function(){
+    document.location.reload();
+  };
+  
+  resetBtn.addEventListener("click",resetHandler);
+  nextBtn.addEventListener("click",nextGameHandler);
 
   return{
     getPlayers,

@@ -119,34 +119,37 @@ const App = (function(){
     return {row,col};
   };
 
+  const boardEl = document.querySelector("#gameBoard");
+  const winnerEl = document.querySelector("#winner");
+  const playerEl = document.querySelector("#player");
+
   const renderBoard = function(){
-    const boardEl = document.querySelector("#gameBoard");
+    boardEl.innerHTML = null;
     const gameBoard = getGameBoard();
 
     gameBoard.forEach(row => {
       const rowEl = document.createElement("div");
       row.forEach(col => {
         const colEl = document.createElement("div");
-        colEl.textContent = col;
         colEl.className = "tile";
-        rowEl.appendChild(colEl);
+        colEl.textContent = col;
+        rowEl.append(colEl);
       });
-      boardEl.appendChild(rowEl);
+      boardEl.append(rowEl);
     });
   };
 
   const renderWinner = function(player){
-    const winnerEl = document.querySelector("#winner");
     winnerEl.textContent = player.name + "Won!";
   };
   
   const renderCurrentPlayer = function(player){
-    const playerEl = document.querySelector("#player");
     playerEl.textContent = 
-      `Player: ${player.name}  Marker: ${player.marker}`;
+      `Player: ${player.name} Marker: ${player.marker}`;
   };
 
   const play = function(){
+    renderBoard();
     const maxRounds = 9;
     let playerIndex = null;
     for(let i = 0; i < maxRounds; i++){

@@ -119,6 +119,10 @@ const App = (function(){
     return {row,col};
   };
 
+  const tileClickHandler = function(event){
+    
+  }
+
   const boardEl = document.querySelector("#gameBoard");
   const winnerEl = document.querySelector("#winner");
   const playerEl = document.querySelector("#player");
@@ -127,15 +131,15 @@ const App = (function(){
     boardEl.innerHTML = null;
     const gameBoard = getGameBoard();
 
-    gameBoard.forEach(row => {
-      const rowEl = document.createElement("div");
-      row.forEach(col => {
-        const colEl = document.createElement("div");
-        colEl.className = "tile";
-        colEl.textContent = col;
-        rowEl.append(colEl);
+    gameBoard.forEach((row,rowIndex) => {
+      row.forEach((col,colIndex) => {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.dataset.coords = `${rowIndex}-${colIndex}`;
+        tile.textContent = col;
+        tile.addEventListener("click",tileClickHandler);
+        boardEl.append(tile);
       });
-      boardEl.append(rowEl);
     });
   };
 
@@ -145,7 +149,7 @@ const App = (function(){
   
   const renderCurrentPlayer = function(player){
     playerEl.textContent = 
-      `Player: ${player.name} Marker: ${player.marker}`;
+      `Current Player: ${player.name} | Marker: ${player.marker}`;
   };
 
   const play = function(){

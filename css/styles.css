@@ -1,0 +1,65 @@
+*,*::before,*::after{
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  --white: #fff;
+  --main-color: #202733;
+  --shadow: 0 0 5px #ffffffcb;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--main-color);
+}
+
+.container{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border: 2px solid var(--white);
+  color: var(--white);
+  box-shadow: var(--shadow);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container h1{
+  font-size: 3rem;
+  font-family: 'Courier New', Courier, monospace;
+  text-shadow: var(--shadow);
+}
+
+#gameBoard{
+  display: grid;
+  grid-template-columns: repeat(3,80px);
+  grid-template-rows: repeat(3,80px);
+  gap: 10px;
+}
+
+.tile{
+  background-color: #323d50;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tile:hover,
+.tile:active{
+  background-color: #475672;
+}
+
+#winner{
+}
+
+#player{
+}
+

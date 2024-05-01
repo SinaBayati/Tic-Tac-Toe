@@ -202,6 +202,7 @@ const App = (function(){
 
     currentRound = 0;
     currentPlayer = players[0];
+    renderCurrentPlayer(currentPlayer);
   };
 
   const resetHandler = function(){

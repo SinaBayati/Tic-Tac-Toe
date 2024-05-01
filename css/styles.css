@@ -4,7 +4,8 @@
 }
 
 :root{
-  --white: #fff;
+  --white: #e7e7e7;
+  --black: #1b1b1b;
   --main-color: #1b273a;
   --shadow: 0 0 5px #ffffffcb;
   --border-width: 2px;
@@ -92,7 +93,7 @@ body{
 
 .buttons button:hover,
 .buttons button:active{
-  border: var(--border-width) solid #000;
+  border: var(--border-width) solid var(--black);
 }
 
 #reset{
@@ -101,6 +102,53 @@ body{
 
 #next-game{
   background-color: #00e600;
-  color: #000;
+  color: var(--black);
 }
 
+dialog{
+  width: 300px;
+  background-color: transparent;
+  border-radius: 10px;
+  color: var(--white);
+  padding: 20px;
+  margin: 10vh auto;
+}
+
+dialog::backdrop{
+  background-color: #000000ab;
+  backdrop-filter: blur(5px);
+}
+
+dialog label{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+dialog form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+}
+
+dialog input{
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1rem;
+  outline: none;
+}
+
+dialog button{
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--white);
+}
+
+dialog button:hover{
+  background-color: var(--black);
+  color: var(--white);
+}

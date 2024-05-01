@@ -30,10 +30,10 @@ const App = (function(){
   const nextBtn = document.querySelector("#next-game");
   const resetBtn = document.querySelector("#reset");
   const modalBox = document.querySelector("dialog");
-
-  const getPlayers = function(){
-    return players;
-  };
+  const modalBtn = document.querySelector("#modal-btn");
+  const closeBtn = document.querySelector("#close-btn");
+  const player1Input = document.querySelector("#player-1");
+  const player2Input = document.querySelector("#player-2");
 
   const getGameBoard = function(){
     return gameBoard;
@@ -100,14 +100,6 @@ const App = (function(){
     }
 
     return winnerMarker;
-  };
-
-  const setPlayerName = function(name,id){
-    players.forEach(player => {
-      if(player.id == id){
-        player.name = name;
-      }
-    });
   };
 
   const renderBoard = function(){
@@ -215,17 +207,46 @@ const App = (function(){
   const resetHandler = function(){
     document.location.reload();
   };
-  
+
+  const showModalBox = function(){
+    modalBox.showModal();
+  };
+
+  const closeModalBox = function(){
+    modalBox.close();
+  };
+
+  const modalHandler = function(e){
+    e.preventDefault();
+
+    let player1Name = "Player-1";
+    if(player1Input.value){
+      player1Name = player1Input.value;
+    }
+
+    let player2Name = "Player-2";
+    if(player2Input.value){
+      player2Name = player2Input.value;
+    }
+
+    players[0].name = player1Name;
+    players[1].name = player2Name;
+
+    renderInfo();
+    renderCurrentPlayer(currentPlayer);
+    
+    modalBox.close();
+  };
+
   resetBtn.addEventListener("click",resetHandler);
   nextBtn.addEventListener("click",nextGameHandler);
+  window.addEventListener("load",showModalBox);
+  closeBtn.addEventListener("click",closeModalBox);
+  modalBtn.addEventListener("click",modalHandler);
 
   return{
-    getPlayers,
-    setPlayerName,
     render,
   };
 })();
 
-App.setPlayerName(prompt("Player1: ","Player-1"),"1");
-App.setPlayerName(prompt("Player2: ","Player-2"),"2");
 App.render();
